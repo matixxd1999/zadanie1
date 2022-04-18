@@ -97,4 +97,8 @@ class Units
 
         return $this;
     }
+    public function __toString()
+    {
+        return $this->UnitShortName;    
+    }
 }

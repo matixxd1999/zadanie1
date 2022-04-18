@@ -77,4 +77,8 @@ class WareHouses
 
         return $this;
     }
+    public function __toString()
+    {
+        return $this->WareHouseName;    
+    }
 }
