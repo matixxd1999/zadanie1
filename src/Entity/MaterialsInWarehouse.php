@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\MaterialsInWarehouseRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,70 +18,40 @@ class MaterialsInWarehouse
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity=WareHouses::class, inversedBy="materialsInWarehouses")
+     * @ORM\ManyToOne(targetEntity=WareHouses::class, inversedBy="materialsInWarehouses")
      */
-    private $WareHouseID;
+    private $WareHouse;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Articles::class, inversedBy="materialsInWarehouses")
+     * @ORM\OneToOne(targetEntity=Articles::class, cascade={"persist", "remove"})
      */
-    private $ArticleID;
-
-    public function __construct()
-    {
-        $this->WareHouseID = new ArrayCollection();
-        $this->ArticleID = new ArrayCollection();
-    }
+    private $Article;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return Collection<int, WareHouses>
-     */
-    public function getWareHouseID(): Collection
+    public function getWareHouse(): ?WareHouses
     {
-        return $this->WareHouseID;
+        return $this->WareHouse;
     }
 
-    public function addWareHouseID(WareHouses $wareHouseID): self
+    public function setWareHouse(?WareHouses $WareHouse): self
     {
-        if (!$this->WareHouseID->contains($wareHouseID)) {
-            $this->WareHouseID[] = $wareHouseID;
-        }
+        $this->WareHouse = $WareHouse;
 
         return $this;
     }
 
-    public function removeWareHouseID(WareHouses $wareHouseID): self
+    public function getArticle(): ?Articles
     {
-        $this->WareHouseID->removeElement($wareHouseID);
-
-        return $this;
+        return $this->Article;
     }
 
-    /**
-     * @return Collection<int, Articles>
-     */
-    public function getArticleID(): Collection
+    public function setArticle(?Articles $Article): self
     {
-        return $this->ArticleID;
-    }
-
-    public function addArticleID(Articles $articleID): self
-    {
-        if (!$this->ArticleID->contains($articleID)) {
-            $this->ArticleID[] = $articleID;
-        }
-
-        return $this;
-    }
-
-    public function removeArticleID(Articles $articleID): self
-    {
-        $this->ArticleID->removeElement($articleID);
+        $this->Article = $Article;
 
         return $this;
     }

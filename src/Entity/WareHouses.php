@@ -25,7 +25,7 @@ class WareHouses
     private $WareHouseName;
 
     /**
-     * @ORM\ManyToMany(targetEntity=MaterialsInWarehouse::class, mappedBy="WareHouseID")
+     * @ORM\OneToMany(targetEntity=MaterialsInWarehouse::class, mappedBy="WareHouse")
      */
     private $materialsInWarehouses;
 
@@ -63,7 +63,7 @@ class WareHouses
     {
         if (!$this->materialsInWarehouses->contains($materialsInWarehouse)) {
             $this->materialsInWarehouses[] = $materialsInWarehouse;
-            $materialsInWarehouse->addWareHouseID($this);
+            $materialsInWarehouse->setWareHouse($this);
         }
 
         return $this;
@@ -72,13 +72,17 @@ class WareHouses
     public function removeMaterialsInWarehouse(MaterialsInWarehouse $materialsInWarehouse): self
     {
         if ($this->materialsInWarehouses->removeElement($materialsInWarehouse)) {
-            $materialsInWarehouse->removeWareHouseID($this);
+            // set the owning side to null (unless already changed)
+            if ($materialsInWarehouse->getWareHouse() === $this) {
+                $materialsInWarehouse->setWareHouse(null);
+            }
         }
 
         return $this;
     }
+
     public function __toString()
     {
-        return $this->WareHouseName;    
+        return $this->WareHouseName;
     }
 }
