@@ -40,25 +40,29 @@ class MaterialsInWarehouseCrudController extends AbstractCrudController
     
             // the Symfony Security permission needed to manage the entity
             // (none by default, so you can manage all instances of the entity)
-            ->setEntityPermission('ROLE_ADMIN')
+            // ->setEntityPermission('ROLE_ADMIN')
         ;
     }
     
     public function configureFields(string $pageName): iterable
     {
-        return [
+        
             // IdField::new('id'),
             // TextField::new('title'),
             // TextEditorField::new('description'),
-            AssociationField::new('WareHouse'),
-            AssociationField::new('Article'),
+            yield AssociationField::new('WareHouse');
+            yield AssociationField::new('Article');
+            yield IntegerField::new('amount');
+            yield PercentField::new('VAT');
+            yield NumberField::new('UnitPrice');       
+
             // TextField::new('title'),
             // TextField::new('title'),
             // TextField::new('title'),
             // PercentField::new('VAT'),
             // IntegerField::new('Amount'),
             // NumberField::new('UnitPrice')        
-        ];
+        
     }
     
 }

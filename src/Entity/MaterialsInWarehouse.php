@@ -27,6 +27,21 @@ class MaterialsInWarehouse
      */
     private $Article;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $Amount;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $VAT;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $UnitPrice;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +67,42 @@ class MaterialsInWarehouse
     public function setArticle(?Articles $Article): self
     {
         $this->Article = $Article;
+
+        return $this;
+    }
+
+    public function getAmount(): ?int
+    {
+        return $this->Amount;
+    }
+
+    public function setAmount(?int $Amount): self
+    {
+        $this->Amount = $Amount;
+
+        return $this;
+    }
+
+    public function getVAT(): ?float
+    {
+        return $this->VAT;
+    }
+
+    public function setVAT(?float $VAT): self
+    {
+        $this->VAT = $VAT;
+
+        return $this;
+    }
+
+    public function getUnitPrice(): ?float
+    {
+        return $this->UnitPrice;
+    }
+
+    public function setUnitPrice(float $UnitPrice): self
+    {
+        $this->UnitPrice = $UnitPrice;
 
         return $this;
     }

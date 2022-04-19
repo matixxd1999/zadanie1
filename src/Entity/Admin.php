@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AdminRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -33,6 +35,26 @@ class Admin implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $FirstName;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $LastName;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=WareHouses::class, inversedBy="admins")
+     */
+    private $Warehouse;
+
+    public function __construct()
+    {
+        $this->Warehouse = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -113,6 +135,54 @@ class Admin implements UserInterface
     public function __toString()
     {
         return $this->username;    
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->FirstName;
+    }
+
+    public function setFirstName(string $FirstName): self
+    {
+        $this->FirstName = $FirstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->LastName;
+    }
+
+    public function setLastName(string $LastName): self
+    {
+        $this->LastName = $LastName;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, WareHouses>
+     */
+    public function getWarehouse(): Collection
+    {
+        return $this->Warehouse;
+    }
+
+    public function addWarehouse(WareHouses $warehouse): self
+    {
+        if (!$this->Warehouse->contains($warehouse)) {
+            $this->Warehouse[] = $warehouse;
+        }
+
+        return $this;
+    }
+
+    public function removeWarehouse(WareHouses $warehouse): self
+    {
+        $this->Warehouse->removeElement($warehouse);
+
+        return $this;
     }
 
 }

@@ -29,9 +29,15 @@ class WareHouses
      */
     private $materialsInWarehouses;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Admin::class, mappedBy="Warehouse")
+     */
+    private $admins;
+
     public function __construct()
     {
         $this->materialsInWarehouses = new ArrayCollection();
+        $this->admins = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -84,5 +90,32 @@ class WareHouses
     public function __toString()
     {
         return $this->WareHouseName;
+    }
+
+    /**
+     * @return Collection<int, Admin>
+     */
+    public function getAdmins(): Collection
+    {
+        return $this->admins;
+    }
+
+    public function addAdmin(Admin $admin): self
+    {
+        if (!$this->admins->contains($admin)) {
+            $this->admins[] = $admin;
+            $admin->addWarehouse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdmin(Admin $admin): self
+    {
+        if ($this->admins->removeElement($admin)) {
+            $admin->removeWarehouse($this);
+        }
+
+        return $this;
     }
 }
