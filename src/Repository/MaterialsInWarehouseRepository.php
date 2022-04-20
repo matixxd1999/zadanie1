@@ -45,22 +45,26 @@ class MaterialsInWarehouseRepository extends ServiceEntityRepository
         }
     }
 
-    // /**
-    //  * @return MaterialsInWarehouse[] Returns an array of MaterialsInWarehouse objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return MaterialsInWarehouse[] Returns an array of MaterialsInWarehouse objects
+     */
+    public function WarehouseFilterByUserId($id)
     {
-        return $this->createQueryBuilder('m')
+        $result = $this->createQueryBuilder('m')
             ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
+            ->setParameter('val', $id)
             ->orderBy('m.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
+
+        dd($result);
+
+        return $result;
+
     }
-    */
+    
 
     /*
     public function findOneBySomeField($value): ?MaterialsInWarehouse

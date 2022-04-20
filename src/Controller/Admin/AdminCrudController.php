@@ -32,14 +32,11 @@ class AdminCrudController extends AbstractCrudController
             // $roles=['Magazyn 1', 'Magazyn 2','Magazyn 3', 'Magazyn 4'];
             // yield ChoiceField::new('Warehouse')->setChoices(array_combine($roles, $roles));
             yield AssociationField::new('Warehouse');
-
-            // ->setChoices(static fn (?WareHouses $foo): array => $foo->
-            // ->allowMultipleChoices()
-            // ->renderExpanded()
-            // ;
-
-
-            // TextEditorField::new('description'),
+            $roles=['ROLE_ADMIN', 'ROLE_USER'];
+            yield ChoiceField::new('roles')
+            ->setChoices(array_combine($roles, $roles))
+            ->allowMultipleChoices()
+            ->renderExpanded();
       
     }
     public function configureCrud(Crud $crud): Crud
