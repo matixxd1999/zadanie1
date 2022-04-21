@@ -3,14 +3,19 @@
 namespace App\Controller\Admin;
 
 use App\Entity\MaterialsInWarehouse;
+use App\Entity\WareHouses;
 use App\Repository\ArticlesRepository;
+use App\Repository\MaterialsInWarehouseRepository;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\PercentField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class MaterialsInWarehouseCrudController extends AbstractCrudController
 {
@@ -51,10 +56,38 @@ class MaterialsInWarehouseCrudController extends AbstractCrudController
             // TextField::new('title'),
             // TextEditorField::new('description'),
             yield AssociationField::new('WareHouse');
-            yield AssociationField::new('Article');
-            yield IntegerField::new('amount');
+            // ->setQueryBuilder(function(QueryBuilder $querybuilder){
+            //     $querybuilder
+            //         ->addSelect('wh.WareHouseName')
+            //         ->addSelect('a.ArticleName')
+            //         ->addSelect('w.Amount')
+            //         ->addSelect('w.VAT')
+            //         ->addSelect('w.UnitPrice')
+            //         ->setParameter('userId', $id)
+            //         ->where('u.id = :userId')
+
+            //         ->leftJoin('w.Article', 'a')
+            //         ->leftJoin('w.WareHouse', 'wh')
+            //         ->leftJoin('wh.admins', 'u')
+
+            //         ->orderBy('w.id', 'ASC')
+            //         ->setMaxResults(10)
+            //         ->getQuery()
+            //         ->getResult()
+            // });
+            // yield Field::new(MaterialsInWarehouseRepository::class, 'WareHouseName');
+
+
+            // ->formatValue(static function($value, WareHouses $WareHouseName){
+            //     if (!$user = $WareHouseName->getAskedBy()){
+            //         return null;
+            //     }
+            //     return sprintf('%s&nbsp;(%s)', $user->getUser(), $user->getWareHouseName()->count());
+            // });
+            yield AssociationField::new('Article', 'Artykuły');
+            yield IntegerField::new('amount', "Ilość");
             yield PercentField::new('VAT');
-            yield NumberField::new('UnitPrice');       
+            yield NumberField::new('UnitPrice', "Cena Jednostkowa");       
 
             // TextField::new('title'),
             // TextField::new('title'),

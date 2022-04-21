@@ -48,20 +48,30 @@ class MaterialsInWarehouseRepository extends ServiceEntityRepository
     /**
      * @return MaterialsInWarehouse[] Returns an array of MaterialsInWarehouse objects
      */
-    public function WarehouseFilterByUserId($id)
+    public function WarehouseFilterByUserId(int $id)
     {
-        $result = $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $id)
-            ->orderBy('m.id', 'ASC')
+        return $this->createQueryBuilder('w')
+            // ->addSelect('w.id')
+            // ->addSelect('u.id AS userId')
+            ->Select('wh.WareHouseName')
+            // ->addSelect('a.ArticleName')
+            // ->addSelect('w.Amount')
+            // ->addSelect('w.VAT')
+            // ->addSelect('w.UnitPrice')
+            ->setParameter('userId', $id)
+            ->where('u.id = :userId')
+
+            ->leftJoin('w.Article', 'a')
+            ->leftJoin('w.WareHouse', 'wh')
+            ->leftJoin('wh.admins', 'u')
+
+            ->orderBy('w.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
 
-        dd($result);
-
-        return $result;
+        
 
     }
     
