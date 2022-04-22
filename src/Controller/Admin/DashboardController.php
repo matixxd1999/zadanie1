@@ -33,12 +33,11 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('Jednostki', 'fas fa-list', Units::class);
-        yield MenuItem::linkToCrud('Artykuły', 'fas fa-list', Articles::class);
-        yield MenuItem::linkToCrud('Magazyny', 'fas fa-list', WareHouses::class);
+        yield MenuItem::linkToCrud('Jednostki', 'fas fa-list', Units::class)->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkToCrud('Artykuły', 'fas fa-list', Articles::class)->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkToCrud('Magazyny', 'fas fa-list', WareHouses::class)->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('Materiały w Magazynach', 'fas fa-list', MaterialsInWarehouse::class);
-        yield MenuItem::linkToCrud('Użytkownicy', 'fas fa-list', Admin::class)
-        ->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkToCrud('Użytkownicy', 'fas fa-list', Admin::class) ->setPermission('ROLE_ADMIN');
 
 
     }

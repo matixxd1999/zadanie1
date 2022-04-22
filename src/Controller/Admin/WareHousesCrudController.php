@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\WareHouses;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class WareHousesCrudController extends AbstractCrudController
@@ -22,4 +23,10 @@ class WareHousesCrudController extends AbstractCrudController
         ];
     }
     */
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return parent::configureCrud($crud)
+        ->setEntityPermission('ROLE_ADMIN');
+    }
 }

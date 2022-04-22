@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Admin;
 use App\Entity\MaterialsInWarehouse;
 use App\Entity\WareHouses;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,6 +19,12 @@ class TestController extends AbstractController
      */
     public function index(Request $request, UserInterface $user): Response
     {
+
+        $admin = $this->getDoctrine()
+        ->getRepository(Admin::class)
+        ->find(5);
+
+        dd($admin);
 
         $idUser = $user->getId();
         // $idUser = 2;

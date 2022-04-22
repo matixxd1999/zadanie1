@@ -56,11 +56,7 @@ class AdminCrudController extends AbstractCrudController
     //     $test = $this->getDoctrine()
     //     ->getRepository(MaterialsInWarehouse::class)
     //     ->WarehouseFilterByUserId($idUser);
-
-
     //     return $this->encode($test);
-        
-
     // }
 
  
@@ -76,9 +72,21 @@ class AdminCrudController extends AbstractCrudController
             yield TextField::new('LastName');
             yield TextField::new('username');
 
+            // $adminId = $this->get('request_stack')->getCurrentRequest()->query->all();
+            // $admin = $this->getDoctrine()->getRepository(Admin::class)->find(2)->getPassword();
 
+            // dump($adminId);
+            // dd($admin);
 
+            yield TextField::new('password')
+            ->setLabel("New Password")
+            ->setFormType(PasswordType::class)
 
+            ->setFormTypeOption('empty_data', [''])            //$admin hasło gdy jest puste pole
+
+            ->setRequired(false)
+            ->setHelp('If the right is not given, leave the field blank.')
+            ->hideOnIndex();
 
 
 
@@ -96,13 +104,7 @@ class AdminCrudController extends AbstractCrudController
             ->renderExpanded();
 
 
-            yield TextField::new('password')
-            ->setLabel("New Password")
-            ->setFormType(PasswordType::class)
-            ->setFormTypeOption('empty_data', '')
-            ->setRequired(false)
-            ->setHelp('If the right is not given, leave the field blank.');
-            // ->hideOnIndex();
+           
             // return [$password];
     }
 
@@ -116,19 +118,42 @@ class AdminCrudController extends AbstractCrudController
 
     public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
+
+        // dd($this->get('request_stack')->getCurrentRequest()->request->all());
+        $adminId = $this->get('request_stack')->getCurrentRequest()->query->all()['entityId'];
+        
+        // $admin = $this->getDoctrine()
+        // ->getRepository(Admin::class)
+        // ->find(1);
+
+        // $admin = $this->getDoctrine()
+        // ->getRepository(Admin::class)
+        // ->findAll();
+
+        // $currentPassword = getPassword($admin);
+
+        // dump($admin);
+        // dump($currentPassword);
+        // dd($this->get('request_stack')->getCurrentRequest()->query->all()['entityId']);
+
         // set new password with encoder interface
         if (method_exists($entityInstance, 'setPassword')) {
 
             $clearPassword = trim($this->get('request_stack')->getCurrentRequest()->request->all()['Admin']['password']);
-
+            // dd($clearPassword);
             ///MyLog::info("clearPass:" . $clearPassword);
-
+            
             // save password only if is set a new clearpass
             if ( !empty($clearPassword) ) {
                 ////MyLog::info("clearPass not empty! encoding password...");
                 $encodedPassword = $this->passwordEncoder->encodePassword($this->getUser(), $clearPassword);
                 $entityInstance->setPassword($encodedPassword);
+                
+            } 
+            else{
+
             }
+            
         }
 
         parent::updateEntity($entityManager, $entityInstance);
