@@ -37,7 +37,7 @@ class MaterialsInWarehouseCrudController extends AbstractCrudController
             // ->setEntityLabelInSingular('Produkt')
             // ->setEntityLabelInPlural('Produkty')
             return parent::configureCrud($crud)
-            ->setEntityPermission('Magazyn 1');
+            ->setEntityPermission('ROLE_ADMIN');
             // ->setFormOptions()
             // in addition to a string, the argument of the singular and plural label methods
             // can be a closure that defines two nullable arguments: entityInstance (which will

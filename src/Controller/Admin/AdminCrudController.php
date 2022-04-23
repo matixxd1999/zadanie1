@@ -82,7 +82,7 @@ class AdminCrudController extends AbstractCrudController
             ->setLabel("New Password")
             ->setFormType(PasswordType::class)
 
-            ->setFormTypeOption('empty_data', [''])            //$admin hasło gdy jest puste pole
+            ->setFormTypeOption('empty_data', '')            //$admin - hasło gdy jest puste pole
 
             ->setRequired(false)
             ->setHelp('If the right is not given, leave the field blank.')
@@ -120,18 +120,18 @@ class AdminCrudController extends AbstractCrudController
     {
 
         // dd($this->get('request_stack')->getCurrentRequest()->request->all());
-        $adminId = $this->get('request_stack')->getCurrentRequest()->query->all()['entityId'];
+        // $adminId = $this->get('request_stack')->getCurrentRequest()->query->all()['entityId'];
         
         // $admin = $this->getDoctrine()
         // ->getRepository(Admin::class)
-        // ->find(1);
+        // ->find(2)->getPassword();
 
         // $admin = $this->getDoctrine()
         // ->getRepository(Admin::class)
         // ->findAll();
 
         // $currentPassword = getPassword($admin);
-
+        // dd($adminId);
         // dump($admin);
         // dump($currentPassword);
         // dd($this->get('request_stack')->getCurrentRequest()->query->all()['entityId']);
