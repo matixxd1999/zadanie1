@@ -26,11 +26,11 @@ class ReferenceController extends AbstractController
         // ->getRepository(MaterialsInWarehouse::class)
         // ->WarehouseFilterByUserId(2);
 
-        $admin = $this->getDoctrine()
-        ->getRepository(Articles::class)
-        ->findAll();
+        // $admin = $this->getDoctrine()
+        // ->getRepository(Articles::class)
+        // ->findAll();
 
-        dd($admin);
+        // dd($admin);
         if ($form->isSubmitted()){
             $em = $this->getDoctrine()->getManager();
             $em->persist($materialsinwarehouse);

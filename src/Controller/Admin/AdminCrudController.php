@@ -85,7 +85,7 @@ class AdminCrudController extends AbstractCrudController
             ->setFormTypeOption('empty_data', '')            //$admin - hasło gdy jest puste pole
 
             ->setRequired(false)
-            ->setHelp('If the right is not given, leave the field blank.')
+            ->setHelp('Jeśli pole zostanie puste przy edycji to nadpisuje hasło')
             ->hideOnIndex();
 
 
