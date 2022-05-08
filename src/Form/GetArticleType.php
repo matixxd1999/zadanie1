@@ -13,7 +13,7 @@ class GetArticleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('Amount')
+            ->add('Amount', null, ['label' => 'Ilość'])
             ->add('VAT')
             ->add('UnitPrice')
             ->add('WareHouse')

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\MaterialsInWarehouseRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -29,16 +30,22 @@ class MaterialsInWarehouse
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Regex(
+     * pattern="/^[1-9]\d*$/",
+     * message="Liczba musi być większa od 0"
+     * )
      */
     private $Amount;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Assert\Regex("/^[0-9][0-9]?$|^100$/")
      */
     private $VAT;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Regex("/^\d{0,8}(\.\d{1,4})?$/")
      */
     private $UnitPrice;
 
