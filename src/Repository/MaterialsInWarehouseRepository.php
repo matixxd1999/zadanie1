@@ -53,11 +53,42 @@ class MaterialsInWarehouseRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('w')
             // ->addSelect('w.id')
             // ->addSelect('u.id AS userId')
-            ->Select('wh.WareHouseName')
-            // ->addSelect('a.ArticleName')
-            // ->addSelect('w.Amount')
-            // ->addSelect('w.VAT')
-            // ->addSelect('w.UnitPrice')
+            // ->Select('wh.WareHouseName AS yerrr')
+            ->Select('wh.WareHouseName AS warehouseName')
+            ->addSelect('wh.id AS idWarehouse')
+            ->addSelect('a.ArticleName AS article')
+            ->addSelect('w.Amount AS amount')
+            ->addSelect('un.UnitShortName AS unit')
+            ->addSelect('w.VAT AS vat')
+            ->addSelect('w.UnitPrice AS price')
+            ->setParameter('userId', $id)
+            ->where('u.id = :userId')
+
+            ->leftJoin('w.Article', 'a')
+            ->leftJoin('w.WareHouse', 'wh')
+            ->leftJoin('wh.admins', 'u')
+            ->leftJoin('a.UnitShortName', 'un')
+
+            ->orderBy('w.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @return MaterialsInWarehouse[] Returns an array of MaterialsInWarehouse objects
+     */
+    public function WarehouseMaterials(int $id)
+    {
+        return $this->createQueryBuilder('w')
+            ->Select('a.ArticleName')
+            ->addSelect('w.Amount')
+            ->addSelect('w.VAT')
+            ->addSelect('w.UnitPrice')
+            ->addSelect('wh.id')
+            ->addSelect('wh.WareHouseName')
+
             ->setParameter('userId', $id)
             ->where('u.id = :userId')
 
@@ -65,14 +96,13 @@ class MaterialsInWarehouseRepository extends ServiceEntityRepository
             ->leftJoin('w.WareHouse', 'wh')
             ->leftJoin('wh.admins', 'u')
 
-            ->orderBy('w.id', 'ASC')
+            ->groupBy('wh.id')
+            ->addGroupBy('a.id')
+            ->orderBy('wh.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
-
-        
-
     }
     
 

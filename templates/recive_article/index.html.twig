@@ -3,9 +3,28 @@
 {% block title %}Hello ReferenceController!{% endblock %}
 
 {% block main %}
-
 <h1>Formularz przyjęcia artykułu</h1>
 {{form (ArticleForm)}}
+
+
+
+{# {{ form_start(ArticleForm)}}
+<div class="halfForm">
+    {{ form_row(ArticleForm.Amount) }}
+    {{ form_row(ArticleForm.VAT) }}
+</div>
+<div class="halfForm form-control">
+    <div class="rowForm">
+        {{ form_label(ArticleForm.UnitPrice) }}
+        {{ form_widget(ArticleForm.UnitPrice) }}
+    </div>
+    <div class="rowForm">
+        {{ form_label(ArticleForm.WareHouse) }}
+        {{ form_widget(ArticleForm.WareHouse) }}
+    </div>
+</div> #}
+
+{{ form_end(ArticleForm) }}
 
 {# {{MaterialsInWarehouse.WaeHouse}} #}
 

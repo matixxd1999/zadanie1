@@ -40,7 +40,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Użytkownicy', 'fas fa-users', Admin::class) ->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToRoute('Przyjęcie Artykułu', 'fas fa-cart-plus', 'app_reception');
         yield MenuItem::linkToRoute('Wydanie Artykułu', 'fas fa-cart-arrow-down', 'app_release_article');
-
-
+        yield MenuItem::linkToRoute('Stan Magazynowy', 'fas fa-boxes', 'app_warehouse_materials');
     }
 }

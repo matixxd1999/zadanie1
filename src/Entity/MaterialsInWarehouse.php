@@ -36,10 +36,11 @@ class MaterialsInWarehouse
      * )
      */
     private $Amount;
+    
+    //  * @Assert\Regex("/^[0-9][0-9]?$|^100$/")
 
     /**
      * @ORM\Column(type="float", nullable=true)
-     * @Assert\Regex("/^[0-9][0-9]?$|^100$/")
      */
     private $VAT;
 

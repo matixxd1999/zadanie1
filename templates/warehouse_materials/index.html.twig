@@ -1,0 +1,32 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block title %}
+	Stan Magazynowy
+{% endblock %}
+
+{% block main %}
+	<table>
+		<head>
+			<tr>
+				<th>Lp.</th>
+				<th>Magazyn</th>
+				<th>Artykuł</th>
+				<th>Ilość</th>
+				<th>Cena netto [zł]</th>
+				<th>VAT [%]</th>
+			</tr>
+		</head>
+		<body>
+        {% for key, material in materials %}
+			<tr>
+				<td>{{ key + 1 }}</td>
+				<td>{{ material.warehouseName }}</td>
+				<td>{{ material.article }}</td>
+				<td>{{ material.amount }} {{ material.unit}} </td>
+				<td>{{ material.price }}</td>
+				<td>{{ material.vat }}</td>
+			</tr>
+        {% endfor %}
+		</body>
+	</head>
+</table>{% endblock %}
