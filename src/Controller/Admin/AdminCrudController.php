@@ -109,7 +109,28 @@ class AdminCrudController extends AbstractCrudController
     }
 
 
+    public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        if (method_exists($entityInstance, 'setPassword')) {
 
+            $clearPassword = trim($this->get('request_stack')->getCurrentRequest()->request->all()['Admin']['password']);
+            // dd($clearPassword);
+            // MyLog::info("clearPass:" . $clearPassword);
+            
+            // save password only if is set a new clearpass
+            if ( !empty($clearPassword) ) {
+                ////MyLog::info("clearPass not empty! encoding password...");
+                $encodedPassword = $this->passwordEncoder->encodePassword($this->getUser(), $clearPassword);
+                $entityInstance->setPassword($encodedPassword);
+                
+            } 
+            else{
+
+            }
+            
+        }
+        parent::persistEntity($entityManager, $entityInstance);
+    }
 
 
 
@@ -119,33 +140,15 @@ class AdminCrudController extends AbstractCrudController
     public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
 
-        // dd($this->get('request_stack')->getCurrentRequest()->request->all());
-        // $adminId = $this->get('request_stack')->getCurrentRequest()->query->all()['entityId'];
-        
-        // $admin = $this->getDoctrine()
-        // ->getRepository(Admin::class)
-        // ->find(2)->getPassword();
-
-        // $admin = $this->getDoctrine()
-        // ->getRepository(Admin::class)
-        // ->findAll();
-
-        // $currentPassword = getPassword($admin);
-        // dd($adminId);
-        // dump($admin);
-        // dump($currentPassword);
-        // dd($this->get('request_stack')->getCurrentRequest()->query->all()['entityId']);
-
         // set new password with encoder interface
         if (method_exists($entityInstance, 'setPassword')) {
 
             $clearPassword = trim($this->get('request_stack')->getCurrentRequest()->request->all()['Admin']['password']);
-            // dd($clearPassword);
-            ///MyLog::info("clearPass:" . $clearPassword);
+
             
             // save password only if is set a new clearpass
             if ( !empty($clearPassword) ) {
-                ////MyLog::info("clearPass not empty! encoding password...");
+
                 $encodedPassword = $this->passwordEncoder->encodePassword($this->getUser(), $clearPassword);
                 $entityInstance->setPassword($encodedPassword);
                 
