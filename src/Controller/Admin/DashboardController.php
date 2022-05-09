@@ -27,13 +27,13 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Zadanie');
+            ->setTitle('👥 Magazyniarnia 👥 ');
     }
 
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('Jednostki', 'fas fa-list', Units::class)->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkToCrud('Jednostki', 'fas fa-balance-scale-left', Units::class)->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('Artykuły', 'fas fa-shopping-basket', Articles::class)->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('Magazyny', 'fas fa-warehouse', WareHouses::class)->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('Materiały w Magazynach', 'fas fa-boxes', MaterialsInWarehouse::class)->setPermission('ROLE_ADMIN');
