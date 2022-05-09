@@ -31,91 +31,19 @@ class MaterialsInWarehouseCrudController extends AbstractCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
-   
-        // return $crud
-            // the labels used to refer to this entity in titles, buttons, etc.
-            // ->setEntityLabelInSingular('Produkt')
-            // ->setEntityLabelInPlural('Produkty')
             return parent::configureCrud($crud)
-            ->setEntityPermission('ROLE_ADMIN');
-            // ->setFormOptions()
-            // in addition to a string, the argument of the singular and plural label methods
-            // can be a closure that defines two nullable arguments: entityInstance (which will
-            // be null in 'index' and 'new' pages) and the current page name
-
-            // ->setEntityLabelInSingular(
-            //     fn (?MaterialsInWarehouse $MaterialsInWarehouse, ?string $admin) => $MaterialsInWarehouse ? $MaterialsInWarehouse->toString() : 'Product'
-            // )
-            // ->setEntityLabelInPlural(function (?MaterialsInWarehouse $category, ?string $admin) {
-            //     return 'edit' === $admin ? $category->getLabel() : 'Categories';
-            // })
-    
-            // the Symfony Security permission needed to manage the entity
-            // (none by default, so you can manage all instances of the entity)
-            // ->setEntityPermission('ROLE_ADMIN')
-        ;
+            ->setEntityPermission('ROLE_ADMIN')
+            ->setPageTitle(Crud::PAGE_INDEX, 'Materiały w Magazynach')
+            ->setEntityLabelInSingular('Artykuł do magazynu');     
     }
-
-    // public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, CollectionFilterCollection $filters): QueryBuilder
-    // {
-    //     $queryBuilder = parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters);
-
-    //     if ($this->isGranted('ROLE_ADMIN')) {
-    //         return $queryBuilder;
-    //     }
-
-    //     return $queryBuilder
-    //         ->andWhere('entity.id = :id')
-    //         ->setParameter('id', $this->getUser()->getId());
-    //         dump($queryBuilder);
-    // }
     
     public function configureFields(string $pageName): iterable
     {
-        
-            // IdField::new('id'),
-            // TextField::new('title'),
-            // TextEditorField::new('description'),
-            yield AssociationField::new('WareHouse');
-            // ->setQueryBuilder(function(QueryBuilder $querybuilder){
-            //     $querybuilder
-            //         ->addSelect('wh.WareHouseName')
-            //         ->addSelect('a.ArticleName')
-            //         ->addSelect('w.Amount')
-            //         ->addSelect('w.VAT')
-            //         ->addSelect('w.UnitPrice')
-            //         ->setParameter('userId', $id)
-            //         ->where('u.id = :userId')
 
-            //         ->leftJoin('w.Article', 'a')
-            //         ->leftJoin('w.WareHouse', 'wh')
-            //         ->leftJoin('wh.admins', 'u')
-
-            //         ->orderBy('w.id', 'ASC')
-            //         ->setMaxResults(10)
-            //         ->getQuery()
-            //         ->getResult()
-            // });
-            // yield Field::new(MaterialsInWarehouseRepository::class, 'WareHouseName');
-
-
-            // ->formatValue(static function($value, WareHouses $WareHouseName){
-            //     if (!$user = $WareHouseName->getAskedBy()){
-            //         return null;
-            //     }
-            //     return sprintf('%s&nbsp;(%s)', $user->getUser(), $user->getWareHouseName()->count());
-            // });
+            yield AssociationField::new('WareHouse', 'Magazyn');
             yield AssociationField::new('Article', 'Artykuły');
             yield IntegerField::new('amount', "Ilość");
             yield PercentField::new('VAT');
-            yield NumberField::new('UnitPrice', "Cena Jednostkowa");       
-
-            // TextField::new('title'),
-            // TextField::new('title'),
-            // TextField::new('title'),
-            // PercentField::new('VAT'),
-            // IntegerField::new('Amount'),
-            // NumberField::new('UnitPrice')        
-        
+            yield NumberField::new('UnitPrice', "Cena Jednostkowa");                    
     }   
 }

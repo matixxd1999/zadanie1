@@ -21,19 +21,14 @@ class ReleaseArticleController extends AbstractController
         $form = $this->createForm(ReleaseArticleType::class, $materialsinwarehouse);
         $form->handleRequest($request);
         
-        
-
-        // dd($admin);
         if ($form->isSubmitted() && $form->isValid()){
             $dataForm = $form->getData();
-            // dump($dataForm->getArticle()->getid());
-            // dump($dataForm->getAmount());
             $userRepo = $this->getDoctrine()->getRepository(MaterialsInWarehouse::class);
             $materialsinwarehouseExist = $userRepo->findOneBy([
                 'WareHouse' => $dataForm->getWareHouse()->getid(), 
                 'Article' => $dataForm->getArticle()->getid(),
         ]);
-            // dd($test);
+
             $em = $this->getDoctrine()->getManager();
 
             if ($materialsinwarehouseExist == null){
@@ -47,23 +42,14 @@ class ReleaseArticleController extends AbstractController
             else{
                 echo 'Brak towaru w magazynie !!!';
             }
-            
+
+            return $this->redirectToRoute('admin');
             $em->flush();
         }
-
-
-
-
 
 
         return $this->render('release_article/index.html.twig', [
             'ArticleForm' => $form->createView()
         ]);
     }
-    // public function index(): Response
-    // {
-    //     return $this->render('release_article/index.html.twig', [
-    //         'controller_name' => 'ReleaseArticleController',
-    //     ]);
-    // }
 }

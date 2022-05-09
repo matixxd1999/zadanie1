@@ -14,8 +14,8 @@ class ReleaseArticleType extends AbstractType
     {
         $builder
             ->add('Amount', null, ['label' => 'Ilość'])
-            ->add('WareHouse')
-            ->add('Article')
+            ->add('WareHouse', null, ['label' => 'Magazyn'])
+            ->add('Article', null, ['label' => 'Artykuł'])
             ->add('Zatwierdź', SubmitType::class)
         ;
     }

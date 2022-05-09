@@ -34,10 +34,12 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Jednostki', 'fas fa-list', Units::class)->setPermission('ROLE_ADMIN');
-        yield MenuItem::linkToCrud('Artykuły', 'fas fa-list', Articles::class)->setPermission('ROLE_ADMIN');
-        yield MenuItem::linkToCrud('Magazyny', 'fas fa-list', WareHouses::class)->setPermission('ROLE_ADMIN');
-        yield MenuItem::linkToCrud('Materiały w Magazynach', 'fas fa-list', MaterialsInWarehouse::class);
-        yield MenuItem::linkToCrud('Użytkownicy', 'fas fa-list', Admin::class) ->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkToCrud('Artykuły', 'fas fa-shopping-basket', Articles::class)->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkToCrud('Magazyny', 'fas fa-warehouse', WareHouses::class)->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkToCrud('Materiały w Magazynach', 'fas fa-boxes', MaterialsInWarehouse::class)->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkToCrud('Użytkownicy', 'fas fa-users', Admin::class) ->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkToRoute('Przyjęcie Artykułu', 'fas fa-cart-plus', 'app_reception');
+        yield MenuItem::linkToRoute('Wydanie Artykułu', 'fas fa-cart-arrow-down', 'app_release_article');
 
 
     }

@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ReferenceController extends AbstractController
 {
     /**
-     * @Route("/reception", name="app_reference")
+     * @Route("/reception", name="app_reception")
      */
     public function getArticle(Request $request): Response
     {
@@ -22,50 +22,35 @@ class ReferenceController extends AbstractController
         $form = $this->createForm(GetArticleType::class, $materialsinwarehouse);
         $form->handleRequest($request);
 
-      
-
-        // dd($admin);
         if ($form->isSubmitted() && $form->isValid()){
             $dataForm = $form->getData();
-            // dump($dataForm->getArticle()->getid());
-            // dump($dataForm->getAmount());
             $userRepo = $this->getDoctrine()->getRepository(MaterialsInWarehouse::class);
             $materialsinwarehouseExist = $userRepo->findOneBy([
                 'WareHouse' => $dataForm->getWareHouse()->getid(), 
                 'Article' => $dataForm->getArticle()->getid(),
         ]);
-            // dd($test);
             $em = $this->getDoctrine()->getManager();
+            $vat= ($dataForm->getVAT())/100; 
 
             if ($materialsinwarehouseExist == null){
-            $em->persist($materialsinwarehouse);
+                $materialsinwarehouse->setVAT($vat);
+                $em->persist($materialsinwarehouse);
             }
 
             else{
-            $materialsinwarehouseExist->setAmount($materialsinwarehouseExist->getAmount()+$dataForm->getAmount());         
+            $materialsinwarehouseExist->setAmount($materialsinwarehouseExist->getAmount()+$dataForm->getAmount());    
+            $materialsinwarehouseExist->setVAT($vat);   
+            $materialsinwarehouseExist->setUnitPrice($dataForm->getUnitPrice());
+
             $em->persist($materialsinwarehouseExist);
             }
             
             $em->flush();
+            return $this->redirectToRoute('admin');
         }
-
-
-
-
-
 
         return $this->render('reference/index.html.twig', [
             'ArticleForm' => $form->createView()
         ]);
     }
-
-
-
-
-    // public function index(): Response
-    // {
-    //     return $this->render('reference/index.html.twig', [
-    //         'controller_name' => 'ReferenceController',
-    //     ]);
-    // }
 }

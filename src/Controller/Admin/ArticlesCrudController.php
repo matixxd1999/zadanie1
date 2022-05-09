@@ -19,18 +19,17 @@ class ArticlesCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            // IdField::new('id'),
-            TextField::new('ArticleName'),
-            AssociationField::new('UnitShortName'),
-
-            // TextEditorField::new('description'),
+            TextField::new('ArticleName', 'Nazwa Artykułu'),
+            AssociationField::new('UnitShortName', 'Skrót Jednostki'),
         ];
     }
 
     public function configureCrud(Crud $crud): Crud
     {
         return parent::configureCrud($crud)
-        ->setEntityPermission('ROLE_ADMIN');
+        ->setEntityPermission('ROLE_ADMIN')
+        ->setPageTitle(Crud::PAGE_INDEX, 'Artykuły')
+        ->setEntityLabelInSingular('Artykuł');
     }
 
     

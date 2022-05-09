@@ -20,6 +20,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\User\User;
 
 class AdminCrudController extends AbstractCrudController
 {
@@ -39,144 +40,59 @@ class AdminCrudController extends AbstractCrudController
         $this->passwordEncoder = $passwordEncoder;
     }
 
-
-
     public static function getEntityFqcn(): string
     {
-        // $result =  Admin::class;
-
-        // dd($result);
-
         return Admin::class;
     }
-
-    // public function index(Request $request, UserInterface $user): Response
-    // {
-    //     $idUser = $user->getId();
-    //     $test = $this->getDoctrine()
-    //     ->getRepository(MaterialsInWarehouse::class)
-    //     ->WarehouseFilterByUserId($idUser);
-    //     return $this->encode($test);
-    // }
-
- 
-
-
-
-
-    
+   
     public function configureFields(string $pageName): iterable
     {
             yield IdField::new('id')->hideOnForm();
-            yield TextField::new('FirstName');
-            yield TextField::new('LastName');
-            yield TextField::new('username');
-
-            // $adminId = $this->get('request_stack')->getCurrentRequest()->query->all();
-            // $admin = $this->getDoctrine()->getRepository(Admin::class)->find(2)->getPassword();
-
-            // dump($adminId);
-            // dd($admin);
-
-            yield TextField::new('password')
+            yield TextField::new('FirstName', 'Imię');
+            yield TextField::new('LastName', 'Nazwisko');
+            yield TextField::new('username', 'nick');
+            yield TextField::new('password', 'hasło')
             ->setLabel("New Password")
             ->setFormType(PasswordType::class)
+            ->setFormTypeOption('empty_data', '')
+            ->setRequired($pageName === Crud::PAGE_NEW)
+            ->onlyWhenCreating();
+            // ->onlyOnForms();
 
-            ->setFormTypeOption('empty_data', '')            //$admin - hasło gdy jest puste pole
-
-            ->setRequired(false)
-            ->setHelp('Jeśli pole zostanie puste przy edycji to nadpisuje hasło')
-            ->hideOnIndex();
-
-
-
-
-
-            // yield TextField::new('password')->hideOnIndex();
-            // yield TextField::new('password')->setFormType(PasswordType::class);
-            // $roles=['Magazyn 1', 'Magazyn 2','Magazyn 3', 'Magazyn 4'];
-            // yield ChoiceField::new('Warehouse')->setChoices(array_combine($roles, $roles));
-            yield AssociationField::new('Warehouse');
+            yield AssociationField::new('Warehouse','Magazyn');
             $roles=['ROLE_ADMIN', 'ROLE_USER'];
-            yield ChoiceField::new('roles')
+            yield ChoiceField::new('roles', 'Uprawnienia')
             ->setChoices(array_combine($roles, $roles))
             ->allowMultipleChoices()
             ->renderExpanded();
-
-
-           
-            // return [$password];
     }
 
 
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
-        if (method_exists($entityInstance, 'setPassword')) {
-
-            $clearPassword = trim($this->get('request_stack')->getCurrentRequest()->request->all()['Admin']['password']);
-            // dd($clearPassword);
-            // MyLog::info("clearPass:" . $clearPassword);
-            
-            // save password only if is set a new clearpass
-            if ( !empty($clearPassword) ) {
-                ////MyLog::info("clearPass not empty! encoding password...");
-                $encodedPassword = $this->passwordEncoder->encodePassword($this->getUser(), $clearPassword);
-                $entityInstance->setPassword($encodedPassword);
-                
-            } 
-            else{
-
-            }
-            
-        }
+        $this->encodePassword($entityInstance);
         parent::persistEntity($entityManager, $entityInstance);
     }
 
+    // public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    // {
+    //     $this->encodePassword($entityInstance);
+    //     parent::updateEntity($entityManager, $entityInstance);
+    // }
 
-
-
-
-
-    public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    private function encodePassword(Admin $user)
     {
-
-        // set new password with encoder interface
-        if (method_exists($entityInstance, 'setPassword')) {
-
-            $clearPassword = trim($this->get('request_stack')->getCurrentRequest()->request->all()['Admin']['password']);
-
-            
-            // save password only if is set a new clearpass
-            if ( !empty($clearPassword) ) {
-
-                $encodedPassword = $this->passwordEncoder->encodePassword($this->getUser(), $clearPassword);
-                $entityInstance->setPassword($encodedPassword);
-                
-            } 
-            else{
-
-            }
-            
+        if ($user->getPassword() !== null) {
+            $user->setPassword($this->passwordEncoder->encodePassword($user, $user->getPassword()));
         }
-
-        parent::updateEntity($entityManager, $entityInstance);
     }
-
-
-
-
-
-
-
-
-
-
-
 
     public function configureCrud(Crud $crud): Crud
     {
         return parent::configureCrud($crud)
-        ->setEntityPermission('ROLE_ADMIN');
+        ->setEntityPermission('ROLE_ADMIN')
+        ->setPageTitle(Crud::PAGE_INDEX, 'Użytkownicy')
+        ->setEntityLabelInSingular('Użytkownik');
     }
 
     public function configureActions(Actions $actions): Actions

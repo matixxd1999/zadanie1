@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Units;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class UnitsCrudController extends AbstractCrudController
 {
@@ -13,21 +14,18 @@ class UnitsCrudController extends AbstractCrudController
         return Units::class;
     }
 
-    /*
     public function configureFields(string $pageName): iterable
     {
-        return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
-        ];
+
+            yield TextField::new('UnitShortName', 'Skrót Jednostki');
+            yield TextField::new('UnitLongName', 'Pełna Nazwa Jednostki');
     }
-    */
-
-
+    
     public function configureCrud(Crud $crud): Crud
     {
         return parent::configureCrud($crud)
-        ->setEntityPermission('ROLE_ADMIN');
+        ->setEntityPermission('ROLE_ADMIN')
+        ->setPageTitle(Crud::PAGE_INDEX, 'Jednostki')
+        ->setEntityLabelInSingular('Jednostka');
     }
 }

@@ -14,10 +14,10 @@ class GetArticleType extends AbstractType
     {
         $builder
             ->add('Amount', null, ['label' => 'Ilość'])
-            ->add('VAT')
-            ->add('UnitPrice')
-            ->add('WareHouse')
-            ->add('Article')
+            ->add('VAT', null, ['label' => 'VAT'])
+            ->add('UnitPrice', null, ['label' => 'Cena jednostkowa'])
+            ->add('WareHouse', null, ['label' => 'Magazyn'])
+            ->add('Article', null, ['label' => 'Artykuł'])
             ->add('Zatwierdź', SubmitType::class)
         ;
     }
