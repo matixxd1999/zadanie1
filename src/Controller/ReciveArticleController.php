@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ReferenceController extends AbstractController
+class ReciveArticleController extends AbstractController
 {
     /**
      * @Route("/reception", name="app_reception")
@@ -49,7 +49,7 @@ class ReferenceController extends AbstractController
             return $this->redirectToRoute('admin');
         }
 
-        return $this->render('reference/index.html.twig', [
+        return $this->render('recive_article/index.html.twig', [
             'ArticleForm' => $form->createView()
         ]);
     }

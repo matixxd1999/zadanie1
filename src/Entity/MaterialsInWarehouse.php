@@ -24,7 +24,7 @@ class MaterialsInWarehouse
     private $WareHouse;
 
     /**
-     * @ORM\OneToOne(targetEntity=Articles::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Articles::class, inversedBy="materialsInWarehouses")
      */
     private $Article;
 
