@@ -3,8 +3,15 @@
 {% block title %}Hello ReferenceController!{% endblock %}
 
 {% block main %}
+
 <h1>Formularz przyjęcia artykułu</h1>
 {{form (ArticleForm)}}
+
+{% if message != '' %}
+    <div class="alert alert-success" role="alert">
+        {{ message }}
+    </div>
+{% endif %}
 
 
 

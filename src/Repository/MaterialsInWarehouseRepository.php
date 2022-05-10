@@ -69,8 +69,7 @@ class MaterialsInWarehouseRepository extends ServiceEntityRepository
             ->leftJoin('wh.admins', 'u')
             ->leftJoin('a.UnitShortName', 'un')
 
-            ->orderBy('w.id', 'ASC')
-            ->setMaxResults(10)
+            ->orderBy('wh.id', 'ASC')
             ->getQuery()
             ->getResult()
         ;

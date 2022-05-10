@@ -45,6 +45,25 @@ class WareHousesRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * Funckja wybierająca magazyny przypisane do użytkownika
+     * 
+     * @return MaterialsInWarehouse[] Returns an array of MaterialsInWarehouse objects
+     */
+    public function UsersWarehouse(int $id)
+    {
+        $result = $this->createQueryBuilder('w')
+            ->setParameter('userId', $id)
+            ->where('u.id = :userId')
+            ->leftJoin('w.admins', 'u')
+            ->orderBy('w.id', 'ASC')
+        ;
+
+        // dd($result);
+        return $result;
+    }
+
+
     // /**
     //  * @return WareHouses[] Returns an array of WareHouses objects
     //  */

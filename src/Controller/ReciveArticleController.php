@@ -9,17 +9,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class ReciveArticleController extends AbstractController
 {
     /**
      * @Route("/reception", name="app_reception")
      */
-    public function getArticle(Request $request): Response
+    public function getArticle(Request $request, UserInterface $user): Response
     {
         $materialsinwarehouse = new MaterialsInWarehouse();
+        $message = '';
 
-        $form = $this->createForm(GetArticleType::class, $materialsinwarehouse);
+        $form = $this->createForm(
+            GetArticleType::class, 
+            $materialsinwarehouse, 
+            ['idUser' => $user->getId()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
@@ -46,12 +51,13 @@ class ReciveArticleController extends AbstractController
             }
             
             $em->flush();
-            echo('Towar dodano do magazynu !!!');
+            $message='Towar dodano do magazynu !!!';
             // return $this->redirect('admin?menuIndex=8&routeName=app_warehouse_materials&signature=0U59LwQQFLHfOwbNSdFIVX-CjVhHR1-_X9ObYyMBuyQ&submenuIndex=-1');
         }
 
         return $this->render('recive_article/index.html.twig', [
-            'ArticleForm' => $form->createView()
+            'ArticleForm' => $form->createView(),
+            'message' => $message,
         ]);
     }
 }
