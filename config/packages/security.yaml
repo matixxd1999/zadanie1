@@ -41,5 +41,4 @@ security:
          - { path: ^/reception, roles: [ROLE_ADMIN, ROLE_USER] }
          - { path: ^/release, roles: [ROLE_ADMIN, ROLE_USER] }
          - { path: ^/warehousematerials, roles: [ROLE_ADMIN, ROLE_USER] }
-
-        #  - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/change/password, roles: [ROLE_ADMIN, ROLE_USER] }
