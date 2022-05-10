@@ -18,12 +18,12 @@ class WareHousesCrudController extends AbstractCrudController
     {
         yield TextField::new('WareHouseName', 'Nazwa Magazynu');
     }
-    
+
     public function configureCrud(Crud $crud): Crud
     {
         return parent::configureCrud($crud)
-        ->setEntityPermission('ROLE_ADMIN')
-        ->setPageTitle(Crud::PAGE_INDEX, 'Magazyny')
-        ->setEntityLabelInSingular('Magazyn');
+            ->setEntityPermission('ROLE_ADMIN')
+            ->setPageTitle(Crud::PAGE_INDEX, 'Magazyny')
+            ->setEntityLabelInSingular('Magazyn');
     }
 }

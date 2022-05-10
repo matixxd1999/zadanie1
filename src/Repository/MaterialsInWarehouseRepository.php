@@ -71,8 +71,7 @@ class MaterialsInWarehouseRepository extends ServiceEntityRepository
 
             ->orderBy('wh.id', 'ASC')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
     /**
@@ -100,10 +99,9 @@ class MaterialsInWarehouseRepository extends ServiceEntityRepository
             ->orderBy('wh.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    
+
 
     /*
     public function findOneBySomeField($value): ?MaterialsInWarehouse

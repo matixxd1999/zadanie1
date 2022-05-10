@@ -17,15 +17,15 @@ class UnitsCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
 
-            yield TextField::new('UnitShortName', 'Skrót Jednostki');
-            yield TextField::new('UnitLongName', 'Pełna Nazwa Jednostki');
+        yield TextField::new('UnitShortName', 'Skrót Jednostki');
+        yield TextField::new('UnitLongName', 'Pełna Nazwa Jednostki');
     }
-    
+
     public function configureCrud(Crud $crud): Crud
     {
         return parent::configureCrud($crud)
-        ->setEntityPermission('ROLE_ADMIN')
-        ->setPageTitle(Crud::PAGE_INDEX, 'Jednostki')
-        ->setEntityLabelInSingular('Jednostka');
+            ->setEntityPermission('ROLE_ADMIN')
+            ->setPageTitle(Crud::PAGE_INDEX, 'Jednostki')
+            ->setEntityLabelInSingular('Jednostka');
     }
 }

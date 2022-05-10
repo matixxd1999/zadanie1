@@ -18,9 +18,7 @@ class WarehouseMaterialsController extends AbstractController
     {
         $idUser = $user->getId();
         $materials = $this->getDoctrine()
-        ->getRepository(MaterialsInWarehouse::class)->WarehouseFilterByUserId($user->getId());
-
-        // dd($materials);
+            ->getRepository(MaterialsInWarehouse::class)->WarehouseFilterByUserId($user->getId());
 
         return $this->render('warehouse_materials/index.html.twig', [
             'materials' => $materials,

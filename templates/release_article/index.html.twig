@@ -1,13 +1,23 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
 
-{% block title %}Hello ReleaseArticleController!{% endblock %}
+{% block title %}Hello ReleaseArticleController!
+{% endblock %}
 
 {% block main %}
-{# /* <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style> */ #}
-<h1>Formularz wydania artykułu</h1>
-{{form(ArticleForm)}}
 
-{% endblock %}
+	<h1>Formularz wydania artykułu</h1>
+	{{form(ArticleForm)}}
+
+		{% if message1 != '' %}
+			<div class="alert alert-success" role="alert">
+				{{ message1 }}
+			</div>
+		{% endif %}
+
+		{% if message2 != '' %}
+			<div class="alert alert-danger" role="alert">
+				{{ message2 }}
+			</div>
+		{% endif %}
+
+	{% endblock %}

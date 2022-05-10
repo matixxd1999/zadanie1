@@ -30,7 +30,8 @@ class ChangePasswordController extends AbstractController
         $idUser = $user->getId();
         $form = $this->createForm(ChangePasswordType::class, $users);
         $form->handleRequest($request);
-        
+        $message = '';
+
         if ($form->isSubmitted() && $form->isValid()) {
             $newPassword = $form->getData()->getPassword();
             $hashNewPassword = $this->passwordEncoder->encodePassword($user, $newPassword);
@@ -42,29 +43,12 @@ class ChangePasswordController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($paste);
             $em->flush();
-            echo('<h1><style=color:red>Hasło zmienione pomyślnie</style></h1>');
-
-
-
-            // dump($passwordExist);
-            // dump($paste);
-            // dump($newPassword);
-            // dump($hashNewPassword);
-            // dump($em);
-            // dd($idUser);
-
+            $message = 'Hasło zostało pomyślnie zmienione !!!';
         }
 
-
-
-
-        
-
-
-
-            return $this->render('change_password/index.html.twig', [
-                'PasswordForm' => $form->createView()
-            ]);
-        
+        return $this->render('change_password/index.html.twig', [
+            'PasswordForm' => $form->createView(),
+            'message' => $message,
+        ]);
     }
 }

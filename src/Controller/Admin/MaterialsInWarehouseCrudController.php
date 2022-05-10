@@ -31,19 +31,19 @@ class MaterialsInWarehouseCrudController extends AbstractCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
-            return parent::configureCrud($crud)
+        return parent::configureCrud($crud)
             ->setEntityPermission('ROLE_ADMIN')
             ->setPageTitle(Crud::PAGE_INDEX, 'Materiały w Magazynach')
-            ->setEntityLabelInSingular('Artykuł do magazynu');     
+            ->setEntityLabelInSingular('Artykuł do magazynu');
     }
-    
+
     public function configureFields(string $pageName): iterable
     {
 
-            yield AssociationField::new('WareHouse', 'Magazyn');
-            yield AssociationField::new('Article', 'Artykuły');
-            yield IntegerField::new('amount', "Ilość");
-            yield PercentField::new('VAT');
-            yield NumberField::new('UnitPrice', "Cena Jednostkowa");                    
-    }   
+        yield AssociationField::new('WareHouse', 'Magazyn');
+        yield AssociationField::new('Article', 'Artykuły');
+        yield IntegerField::new('amount', "Ilość");
+        yield PercentField::new('VAT');
+        yield NumberField::new('UnitPrice', "Cena Jednostkowa");
+    }
 }

@@ -44,24 +44,23 @@ class AdminCrudController extends AbstractCrudController
     {
         return Admin::class;
     }
-   
+
     public function configureFields(string $pageName): iterable
     {
-            yield IdField::new('id')->hideOnForm();
-            yield TextField::new('FirstName', 'Imię');
-            yield TextField::new('LastName', 'Nazwisko');
-            yield TextField::new('username', 'nick');
-            yield TextField::new('password', 'hasło')
+        yield IdField::new('id')->hideOnForm();
+        yield TextField::new('FirstName', 'Imię');
+        yield TextField::new('LastName', 'Nazwisko');
+        yield TextField::new('username', 'nick');
+        yield TextField::new('password', 'hasło')
             ->setLabel("New Password")
             ->setFormType(PasswordType::class)
             ->setFormTypeOption('empty_data', '')
             ->setRequired($pageName === Crud::PAGE_NEW)
             ->onlyWhenCreating();
-            // ->onlyOnForms();
 
-            yield AssociationField::new('Warehouse','Magazyn');
-            $roles=['ROLE_ADMIN', 'ROLE_USER'];
-            yield ChoiceField::new('roles', 'Uprawnienia')
+        yield AssociationField::new('Warehouse', 'Magazyn');
+        $roles = ['ROLE_ADMIN', 'ROLE_USER'];
+        yield ChoiceField::new('roles', 'Uprawnienia')
             ->setChoices(array_combine($roles, $roles))
             ->allowMultipleChoices()
             ->renderExpanded();
@@ -90,15 +89,14 @@ class AdminCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return parent::configureCrud($crud)
-        ->setEntityPermission('ROLE_ADMIN')
-        ->setPageTitle(Crud::PAGE_INDEX, 'Użytkownicy')
-        ->setEntityLabelInSingular('Użytkownik');
+            ->setEntityPermission('ROLE_ADMIN')
+            ->setPageTitle(Crud::PAGE_INDEX, 'Użytkownicy')
+            ->setEntityLabelInSingular('Użytkownik');
     }
 
     public function configureActions(Actions $actions): Actions
     {
         return parent::configureActions($actions)
-        ->setPermission(Action::INDEX, 'ROLE_ADMIN');
+            ->setPermission(Action::INDEX, 'ROLE_ADMIN');
     }
-    
 }

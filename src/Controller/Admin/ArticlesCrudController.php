@@ -15,7 +15,7 @@ class ArticlesCrudController extends AbstractCrudController
         return Articles::class;
     }
 
-    
+
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -27,11 +27,8 @@ class ArticlesCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return parent::configureCrud($crud)
-        ->setEntityPermission('ROLE_ADMIN')
-        ->setPageTitle(Crud::PAGE_INDEX, 'Artykuły')
-        ->setEntityLabelInSingular('Artykuł');
+            ->setEntityPermission('ROLE_ADMIN')
+            ->setPageTitle(Crud::PAGE_INDEX, 'Artykuły')
+            ->setEntityLabelInSingular('Artykuł');
     }
-
-    
-    
 }

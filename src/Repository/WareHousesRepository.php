@@ -56,10 +56,7 @@ class WareHousesRepository extends ServiceEntityRepository
             ->setParameter('userId', $id)
             ->where('u.id = :userId')
             ->leftJoin('w.admins', 'u')
-            ->orderBy('w.id', 'ASC')
-        ;
-
-        // dd($result);
+            ->orderBy('w.id', 'ASC');
         return $result;
     }
 

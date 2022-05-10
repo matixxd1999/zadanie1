@@ -25,18 +25,17 @@ class GetArticleType extends AbstractType
             ->add('UnitPrice', NumberType::class, ['label' => 'Cena jednostkowa'])
             ->add('WareHouse', EntityType::class, [
                 'label' => 'Magazyn',
-                'class'=> WareHouses::class,
-                'query_builder'=> function (EntityRepository $er) use($options) {
+                'class' => WareHouses::class,
+                'query_builder' => function (EntityRepository $er) use ($options) {
                     return $er->UsersWarehouse($options['idUser']);
                 },
-                ])
+            ])
             ->add('Article', EntityType::class, [
-                'class'=> Articles::class,
+                'class' => Articles::class,
                 'label' => 'Artykuł',
                 'required' => true
-                ])
-            ->add('Zatwierdź', SubmitType::class)
-        ;
+            ])
+            ->add('Zatwierdź', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

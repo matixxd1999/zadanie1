@@ -22,37 +22,35 @@ class ReciveArticleController extends AbstractController
         $message = '';
 
         $form = $this->createForm(
-            GetArticleType::class, 
-            $materialsinwarehouse, 
-            ['idUser' => $user->getId()]);
+            GetArticleType::class,
+            $materialsinwarehouse,
+            ['idUser' => $user->getId()]
+        );
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $dataForm = $form->getData();
             $userRepo = $this->getDoctrine()->getRepository(MaterialsInWarehouse::class);
             $materialsinwarehouseExist = $userRepo->findOneBy([
-                'WareHouse' => $dataForm->getWareHouse()->getid(), 
+                'WareHouse' => $dataForm->getWareHouse()->getid(),
                 'Article' => $dataForm->getArticle()->getid(),
-        ]);
+            ]);
             $em = $this->getDoctrine()->getManager();
-            $vat= ($dataForm->getVAT())/100; 
+            $vat = ($dataForm->getVAT()) / 100;
 
-            if ($materialsinwarehouseExist == null){
+            if ($materialsinwarehouseExist == null) {
                 $materialsinwarehouse->setVAT($vat);
                 $em->persist($materialsinwarehouse);
+            } else {
+                $materialsinwarehouseExist->setAmount($materialsinwarehouseExist->getAmount() + $dataForm->getAmount());
+                $materialsinwarehouseExist->setVAT($vat);
+                $materialsinwarehouseExist->setUnitPrice($dataForm->getUnitPrice());
+
+                $em->persist($materialsinwarehouseExist);
             }
 
-            else{
-            $materialsinwarehouseExist->setAmount($materialsinwarehouseExist->getAmount()+$dataForm->getAmount());    
-            $materialsinwarehouseExist->setVAT($vat);   
-            $materialsinwarehouseExist->setUnitPrice($dataForm->getUnitPrice());
-
-            $em->persist($materialsinwarehouseExist);
-            }
-            
             $em->flush();
-            $message='Towar dodano do magazynu !!!';
-            // return $this->redirect('admin?menuIndex=8&routeName=app_warehouse_materials&signature=0U59LwQQFLHfOwbNSdFIVX-CjVhHR1-_X9ObYyMBuyQ&submenuIndex=-1');
+            $message = 'Towar dodano do magazynu !!!';
         }
 
         return $this->render('recive_article/index.html.twig', [

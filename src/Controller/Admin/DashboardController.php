@@ -21,7 +21,7 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
-        return $this->render('dashboard/index.html.twig');    
+        return $this->render('dashboard/index.html.twig');
     }
 
     public function configureDashboard(): Dashboard
@@ -37,7 +37,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Artykuły', 'fas fa-shopping-basket', Articles::class)->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('Magazyny', 'fas fa-warehouse', WareHouses::class)->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('Materiały w Magazynach', 'fas fa-boxes', MaterialsInWarehouse::class)->setPermission('ROLE_ADMIN');
-        yield MenuItem::linkToCrud('Użytkownicy', 'fas fa-users', Admin::class) ->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkToCrud('Użytkownicy', 'fas fa-users', Admin::class)->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToRoute('Przyjęcie Artykułu', 'fas fa-cart-plus', 'app_reception');
         yield MenuItem::linkToRoute('Wydanie Artykułu', 'fas fa-cart-arrow-down', 'app_release_article');
         yield MenuItem::linkToRoute('Stan Magazynowy', 'fas fa-boxes', 'app_warehouse_materials');

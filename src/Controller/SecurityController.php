@@ -14,34 +14,26 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // if ($this->getUser()) {
-        //     return $this->redirectToRoute('target_path');
-        // }
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        // return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
-        return $this->render('@EasyAdmin/page/login.html.twig', 
-            ['last_username' => $lastUsername, 
-            'error' => $error, 
-            'csrf_token_intention' => 'authenticate',
-            'page_title' => '<h2>Magazyniarnia</h2>',
-            'username_label' => 'Login',
-            'password_label' => 'Hasło',
-            'sign_in_label' => 'Zaloguj się',
-            'username_parameter' => 'username',
-            'password_parameter' => 'password',]);
-
-        // return $this->render('@EasyAdmin/page/login.html.twig', [
-        //     'last_username' => $lastUsername,
-        //     'error' => $error,
-        //     'csrf_token_intention' => 'authenticate',
-        //     'username_parameter' => 'username',
-        //     'password_parameter' => 'password',
-        // ]);
+        return $this->render(
+            '@EasyAdmin/page/login.html.twig',
+            [
+                'last_username' => $lastUsername,
+                'error' => $error,
+                'csrf_token_intention' => 'authenticate',
+                'page_title' => '<h2>Magazyniarnia</h2>',
+                'username_label' => 'Login',
+                'password_label' => 'Hasło',
+                'sign_in_label' => 'Zaloguj się',
+                'username_parameter' => 'username',
+                'password_parameter' => 'password',
+            ]
+        );
     }
 
     /**
