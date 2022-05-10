@@ -46,7 +46,8 @@ class ReciveArticleController extends AbstractController
             }
             
             $em->flush();
-            return $this->redirect('admin?menuIndex=8&routeName=app_warehouse_materials&signature=0U59LwQQFLHfOwbNSdFIVX-CjVhHR1-_X9ObYyMBuyQ&submenuIndex=-1');
+            echo('Towar dodano do magazynu !!!');
+            // return $this->redirect('admin?menuIndex=8&routeName=app_warehouse_materials&signature=0U59LwQQFLHfOwbNSdFIVX-CjVhHR1-_X9ObYyMBuyQ&submenuIndex=-1');
         }
 
         return $this->render('recive_article/index.html.twig', [

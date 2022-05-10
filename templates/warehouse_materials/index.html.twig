@@ -24,7 +24,7 @@
 				<td>{{ material.article }}</td>
 				<td>{{ material.amount }} {{ material.unit}} </td>
 				<td>{{ material.price }}</td>
-				<td>{{ material.vat }}</td>
+				<td>{{ material.vat * 100 }}</td>
 			</tr>
         {% endfor %}
 		</body>
