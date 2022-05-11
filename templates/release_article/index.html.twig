@@ -2,10 +2,10 @@
 
 {% block title %}Hello ReleaseArticleController!
 {% endblock %}
+{% block content_title %}	Formularz wydania artykułu	{% endblock %}
 
 {% block main %}
 
-	<h1>Formularz wydania artykułu</h1>
 	{{form(ArticleForm)}}
 
 		{% if message1 != '' %}

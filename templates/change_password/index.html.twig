@@ -3,10 +3,10 @@
 {% block title %}
 	Change Password
 {% endblock %}
+{% block content_title %}	Zmiana Hasła	{% endblock %}
 
 {% block main %}
 
-	<h1>Zmiana Hasła</h1>
 	{{form(PasswordForm)}}
 
 		{% if message != '' %}

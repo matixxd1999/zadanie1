@@ -1,11 +1,13 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
 
-{% block title %}Hello ReferenceController!
+{% block title %}Formularz przyjęcia artykułu
 {% endblock %}
+
+{% block content_title %}	Formularz przyjęcia artykułu	{% endblock %}
 
 {% block main %}
 
-	<h1>Formularz przyjęcia artykułu</h1>
+
 	{{form (ArticleForm)}}
 
 		{% if message != '' %}
