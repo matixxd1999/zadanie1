@@ -6,9 +6,9 @@
 {% block content_title %}	Stan Magazynowy	{% endblock %}
 
 {% block main %}
-	
-	<table class="table table-bordered table-stripped">
-		<head>
+
+	<table class="table table-bordered table-stripped" id="sortTable">
+		<thead>
 			<tr>
 				<th>Lp.</th>
 				<th>Magazyn</th>
@@ -17,8 +17,8 @@
 				<th>Cena netto [zł]</th>
 				<th>VAT [%]</th>
 			</tr>
-		</head>
-		<body>
+		</thead>
+		<tbody>
         {% for key, material in materials %}
 			<tr>
 				<td>{{ key + 1 }}</td>
@@ -29,8 +29,10 @@
 				<td>{{ material.vat * 100 }}</td>
 			</tr>
         {% endfor %}
-		</body>
+		</tbody>
 	</head>
 </table>
-
+<script>
+$('#sortTable').DataTable();
+</script>
 {% endblock %}

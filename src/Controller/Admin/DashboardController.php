@@ -36,7 +36,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Jednostki', 'fas fa-balance-scale-left', Units::class)->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('Artykuły', 'fas fa-shopping-basket', Articles::class)->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('Magazyny', 'fas fa-warehouse', WareHouses::class)->setPermission('ROLE_ADMIN');
-        yield MenuItem::linkToCrud('Materiały w Magazynach', 'fas fa-boxes', MaterialsInWarehouse::class)->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkToCrud('Materiały w Magazynie', 'fas fa-boxes', MaterialsInWarehouse::class)->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('Użytkownicy', 'fas fa-users', Admin::class)->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToRoute('Przyjęcie Artykułu', 'fas fa-cart-plus', 'app_reception');
         yield MenuItem::linkToRoute('Wydanie Artykułu', 'fas fa-cart-arrow-down', 'app_release_article');
